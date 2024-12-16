@@ -14,12 +14,9 @@ with open("multiple_events.txt", "r") as file:
             if event_data:
                 events.append(event_data)
                 event_data = {}
-
 # Add the last event if not added
 if event_data:
     events.append(event_data)
-
-# Calculate and display total cost for each event
 for i, event in enumerate(events, start=1):
     try:
         cost_per_attendee = event["Cost per attendee"]
