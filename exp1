@@ -1,0 +1,31 @@
+# Read multiple sets of data from file
+events = []
+with open("multiple_events.txt", "r") as file:
+    event_data = {}
+    for line in file:
+        line = line.strip()
+        if line:  # Non-empty line
+            try:
+                key, value = line.split(": ", 1)  # Split only once
+                event_data[key] = float(value)
+            except ValueError:
+                print(f"Warning: Skipping improperly formatted line: {line}")
+        else:  # Empty line indicates the end of an event
+            if event_data:
+                events.append(event_data)
+                event_data = {}
+
+# Add the last event if not added
+if event_data:
+    events.append(event_data)
+
+# Calculate and display total cost for each event
+for i, event in enumerate(events, start=1):
+    try:
+        cost_per_attendee = event["Cost per attendee"]
+        num_attendees = event["Number of attendees"]
+        fixed_cost = event["Fixed cost"]
+        total_cost = cost_per_attendee * num_attendees + fixed_cost
+        print(f"Event {i} Total Cost: ${total_cost}")
+    except KeyError as e:
+        print(f"Error: Missing key in event {i}: {e}")
